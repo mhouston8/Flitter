@@ -19,7 +19,7 @@ struct SideMenuView: View {
                         .font(.headline)
                     Text("Batman")
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.gray)  
                 }
                 
                 UserStatsView()
@@ -27,21 +27,24 @@ struct SideMenuView: View {
             }
             .padding(.leading)
             
-            ForEach(SideMenuViewModel.allCases, id: \.rawValue) { item in
-                HStack(spacing: 16) {
-                    Image(systemName: item.imageName)
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    Text(item.title)
-                        .bold()
-                        .font(.subheadline)
-                    
-                    Spacer()
+            ForEach(SideMenuViewModel.allCases, id: \.rawValue) { viewModel in
+                if viewModel == .profile {
+                    NavigationLink {
+                        ProfileView()
+                    } label: {
+                        SideMenuItemRow(viewModel: viewModel)
+                    }
+                } else if viewModel == .logout {
+                    Button {
+                        print("log out")
+                    } label: {
+                        SideMenuItemRow(viewModel: viewModel)
+                    }
+
+                } else {
+                    SideMenuItemRow(viewModel: viewModel)
                 }
-                .frame(height: 40)
-                .padding(.horizontal)
             }
-            
             Spacer()
         }
     }
