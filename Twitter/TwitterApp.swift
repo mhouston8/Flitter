@@ -11,6 +11,7 @@ import Firebase
 @main
 struct TwitterApp: App {
     
+    
     @StateObject var viewModel = AuthViewModel()
     
     //with no app delegate, you can use this
