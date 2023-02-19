@@ -10,6 +10,21 @@ import Foundation
 
 class ExploreViewModel: ObservableObject {
     @Published var users = [User]()
+    @Published var searchText = ""
+    
+    var searchableUsers: [User] {
+        let lowercasedQuery = searchText.lowercased()
+        
+        if searchText.isEmpty {
+            return users
+        } else {
+            return users.filter({
+                $0.username.contains(lowercasedQuery) ||
+                $0.fullname.lowercased().contains(lowercasedQuery)
+            })
+        }
+    }
+    
     let service = UserService()
     
     init() {
